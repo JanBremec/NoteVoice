@@ -55,9 +55,9 @@ We leverage Google's **Gemini 2.5 Flash** for its speed and reasoning capabiliti
 
 1.  **Start the Server**
     ```bash
-    python main.py
+    python -m uvicorn main:app --reload
     ```
-    The API will launch at `http://0.0.0.0:8000`.
+    The API will launch at `http://127.0.0.1:8000`.
 
 2.  **Access the Interface**
     Open `index.html` in your browser (or navigate to `http://localhost:8000` if serving statically).
