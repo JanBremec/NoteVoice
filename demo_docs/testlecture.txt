@@ -1,0 +1,9 @@
+Danes bomo govorili o osnovah linearnosti in linearnih funkcijah. Linearna funkcija je funkcija, ki jo lahko zapišemo v obliki ( f(x) = ax + b ), kjer sta ( a ) in ( b ) realni števili. Parameter ( a ) določa naklon premice, ( b ) pa točko, kjer premica seka os ( y ).
+
+Če je ( a > 0 ), funkcija narašča; če je ( a < 0 ), funkcija pada. Posebna primer je ( a = 0 ), kar pomeni, da funkcija neodvisno od ( x ) vedno zavzame vrednost ( b ).
+
+Linearna funkcija ima lastnost, da so spremembe vrednosti funkcije sorazmerne spremembam argumenta ( x ). To pomeni, da za vsak konstanten korak ( \Delta x ) sprememba ( \Delta f(x) ) ostaja konstantna in enaka ( a \cdot \Delta x ).
+
+Primer: funkcija ( f(x) = 2x + 3 ) pomeni, da se za vsak korak ( x ) za 1 poveča vrednost funkcije za 2 enoti. Če narišemo graf te funkcije, dobimo premico, ki seka os ( y ) v točki 3 in ima naklon 2.
+
+Linearne funkcije so osnova za razumevanje kompleksnejših matematičnih konceptov, kot so sistemi linearnih enačb, matrike in vektorji. Razumevanje njihovega vedenja je ključnega pomena za vse nadaljnje študije algebre in analize.

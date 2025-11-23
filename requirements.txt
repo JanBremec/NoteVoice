@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+python-multipart
+google-genai
+faiss-cpu
+sentence-transformers
+numpy
+tqdm
+pdfplumber
+python-docx
+python-pptx
+pydantic

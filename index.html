@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="sl">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoteVoice - Inteligentni asistent za učenje</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="logo.png" alt="NoteVoice logo" class="logo">
+            <h1>NoteVoice</h1>
+        </div>
+
+        <div class="header-controls">
+            <button class="icon-btn" aria-label="Nastavitve">
+                <span class="material-symbols-outlined">settings</span>
+            </button>
+            <button class="icon-btn" style="display: none;" aria-label="Pomoč">
+                <span class="material-symbols-outlined">help</span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <div class="tabs" role="tablist" aria-label="Načini aplikacije">
+            <button class="tab-btn" role="tab" aria-selected="true" aria-controls="panel-pregled" id="tab-pregled">
+                <span class="material-symbols-outlined">folder_open</span>
+                Pregled dokumentov
+            </button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-vprasaj" id="tab-vprasaj">
+                <span class="material-symbols-outlined">live_help</span>
+                Vprašanje
+            </button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-snemanje" id="tab-snemanje">
+                <span class="material-symbols-outlined">record_voice_over</span>
+                Snemanje
+            </button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-nalaganje" id="tab-nalaganje">
+                <span class="material-symbols-outlined">upload</span>
+                Nalaganje
+            </button>
+        </div>
+
+        <!-- PREGLED PANEL -->
+        <div id="panel-pregled" class="tab-panel" role="tabpanel" aria-labelledby="tab-pregled">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <span class="material-symbols-outlined">folder_open</span>
+                    </div>
+                    <div>
+                        <h2 class="card-title">Pregled dokumentov</h2>
+                        <p class="card-description">Oglejte si vse naložene dokumente, razvrščene po predmetih</p>
+                    </div>
+                </div>
+
+                <div class="search-container">
+                    <input type="text" id="file-search" class="search-box" placeholder="Išči med dokumenti...">
+                </div>
+
+                <div id="file-explorer" class="file-explorer">
+                    <!-- File explorer content will be populated by JavaScript -->
+                </div>
+
+                <div class="keyboard-instructions">
+                    <h4>Tipkovni bližnjice</h4>
+                    <div class="keyboard-shortcuts">
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">↑</div>
+                            <div class="shortcut-description">Premakni se na prejšnji predmet/dokument</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">↓</div>
+                            <div class="shortcut-description">Premakni se na naslednji predmet/dokument</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">Enter</div>
+                            <div class="shortcut-description">Odpri izbrani predmet ali dokument</div>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-key">ESC</div>
+                            <div class="shortcut-description">Zapri trenutni dokument</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VPRASAJ PANEL -->
+        <div id="panel-vprasaj" class="tab-panel" role="tabpanel" aria-labelledby="tab-vprasaj" hidden>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <span class="material-symbols-outlined">mic</span>
+                    </div>
+                    <div>
+                        <h2 class="card-title">Postavite vprašanje</h2>
+                        <p class="card-description">Z uporabo glasu ali tipkovnice postavite vprašanja o svojih
+                            dokumentih</p>
+                    </div>
+                </div>
+                <button id="vprasaj-mic-btn" class="btn-large">
+                    <span class="material-symbols-outlined">mic</span>
+                    Začni poslušati
+                </button>
+                <p class="status" id="vprasaj-status">Pritisnite za govorjenje vprašanja</p>
+                <div id="listening-indicator" class="listening-indicator" style="display: none;">
+                    <span class="material-symbols-outlined" style="vertical-align: middle;">mic</span>
+                    Poslušam vprašanje...
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="sr-only">Vnos besedila</h3>
+                <input type="text" id="vprasaj-subject" style="display: none;"
+                    placeholder="Predmet (neobvezno, npr. Biologija)" aria-label="Filter predmeta"
+                    style="margin-bottom: 10px; width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: var(--radius-medium);">
+                <textarea id="vprasaj-input" placeholder="Ali vtipkajte svoje vprašanje tukaj..."
+                    aria-label="Besedilo vprašanja"></textarea>
+                <button id="vprasaj-submit-btn" style="color: white;" class="btn-large btn-secondary">
+                    <span class="material-symbols-outlined" style="color: white;">send</span>
+                    Pošlji vprašanje
+                </button>
+            </div>
+
+            <div id="vprasaj-response" class="response-area" aria-live="polite" hidden>
+                <!-- Odgovor se bo prikazal tukaj -->
+            </div>
+        </div>
+
+        <!-- SNEMANJE PANEL -->
+        <div id="panel-snemanje" class="tab-panel" role="tabpanel" aria-labelledby="tab-snemanje" hidden>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <span class="material-symbols-outlined">record_voice_over</span>
+                    </div>
+                    <div>
+                        <h2 class="card-title">Snemaj predavanje</h2>
+                        <p class="card-description">Snemajte in prepišite predavanje v realnem času</p>
+                    </div>
+                </div>
+                <button id="snemaj-btn" class="btn-large btn-record">
+                    <span class="material-symbols-outlined">fiber_manual_record</span>
+                    Začni snemanje
+                </button>
+                <p class="status" id="snemaj-status">
+                    <span class="status-indicator">
+                        <span class="status-dot"></span>
+                        Pripravljeno za snemanje predavanja
+                    </span>
+                </p>
+            </div>
+
+            <div class="card" style="flex: 1; display: flex; flex-direction: column;">
+                <h3>Živi prepis</h3>
+                <div class="transcript-container">
+                    <div id="snemaj-transcript" class="response-area" style="white-space: pre-wrap;"></div>
+                    <div id="cursor-position" class="cursor-position"></div>
+                </div>
+
+                <div class="note-section">
+                    <div class="note-indicator" id="note-indicator">
+                        Pozicija za vstavljanje opomb je na začetku prepisa
+                    </div>
+                    <div class="note-input">
+                        <textarea id="user-notes" placeholder="Vnesite svoje opombe tukaj..."></textarea>
+                        <button id="insert-note-btn">Vstavi opombo</button>
+                    </div>
+                </div>
+                <div class="input-group" style="margin-top: 16px; flex-direction: column;">
+                    <input type="text" id="naslov-predavanja" style="display: none;"
+                        placeholder="Naslov predavanja (npr. Biologija 101)">
+                    <input type="text" id="predavanje-subject" style="display: none;"
+                        placeholder="Predmet (npr. Biologija)">
+                    <button id="shrani-predavanje-btn" style="color: white; height: 48px;   "
+                        class="btn-large btn-secondary" style="width: 100%;">
+                        <span class="material-symbols-outlined" style="color: white;">save</span>
+                        Shrani
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- NALAGANJE PANEL -->
+        <div id="panel-nalaganje" class="tab-panel" role="tabpanel" aria-labelledby="tab-nalaganje" hidden>
+            <div class="card" style="flex: 1; display: flex; flex-direction: column;">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <span class="material-symbols-outlined">upload_file</span>
+                    </div>
+                    <div>
+                        <h2 class="card-title">Naloži dokumente</h2>
+                        <p class="card-description">Dodajte PDF, DOCX, PPTX ali TXT datoteke v svojo bazo znanja</p>
+                    </div>
+                </div>
+
+                <input type="text" id="upload-subject" placeholder="Predmet (Obvezno, npr. Zgodovina)"
+                    aria-label="Predmet dokumenta"
+                    style="margin-bottom: 20px; width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: var(--radius-medium);">
+
+                <div id="file-upload-area" class="file-upload-area"
+                    style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+                    <span class="material-symbols-outlined"
+                        style="font-size: 48px; color: var(--text-secondary); margin-bottom: 16px;">cloud_upload</span>
+                    <h3 style="margin: 0 0 8px 0;">Povlecite in spustite datoteke tukaj</h3>
+                    <p style="margin: 0 0 16px 0; color: var(--text-secondary);">ali</p>
+                    <input type="file" id="file-input" multiple accept=".pdf,.docx,.pptx,.txt,.md"
+                        style="display: none;">
+                    <button id="select-files-btn" style="color: white;" class="btn-large btn-secondary">
+                        <span class="material-symbols-outlined" style="color: white;">folder_open</span>
+                        Izberi datoteke
+                    </button>
+                </div>
+
+                <div id="file-list" class="file-list"></div>
+
+                <button id="upload-btn" class="btn-large" disabled>
+                    <span class="material-symbols-outlined">upload</span>
+                    Naloži izbrano
+                </button>
+
+                <div class="progress-bar" id="upload-progress" style="display: none;">
+                    <div class="progress-fill" id="upload-progress-fill"></div>
+                </div>
+
+                <p class="status" id="upload-status"></p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Document Viewer -->
+    <div id="document-viewer" class="document-viewer">
+        <div class="document-header">
+            <h3 id="document-viewer-title" class="document-title">Naslov dokumenta</h3>
+            <button id="document-close" class="document-close" aria-label="Zapri dokument">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div id="document-content" class="document-content">
+            <!-- Document content will be loaded here -->
+        </div>
+        <div class="document-navigation">
+            <button id="prev-file" class="nav-btn">
+                <span class="material-symbols-outlined">arrow_back</span>
+                Prejšnji dokument
+            </button>
+            <div class="file-info">
+                <span id="current-file" class="current-file">Dokument 1</span>
+                <span id="file-count" class="file-count">od 5</span>
+            </div>
+            <button id="next-file" class="nav-btn">
+                Naslednji dokument
+                <span class="material-symbols-outlined">arrow_forward</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="index.js"></script>
+
+</body>
+
+</html>
